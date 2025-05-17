@@ -5,7 +5,6 @@ import Link from "next/link";
 import { buttonVariants } from "../../ui/button";
 import { UserAuthForm } from "./user-auth-form-signup";
 import { signup } from "./actions";
-import { createSupabaseClient } from "@/lib/supabase/client";
 import { useSearchParams, useRouter } from "next/navigation";
 
 export interface SignupWithEmailInput {
@@ -43,15 +42,7 @@ export function Signup() {
     provider: "google" | "github"
   ): Promise<void> => {
     setIsError(false);
-    const client = createSupabaseClient();
-    const currentOrigin =
-      typeof window !== "undefined" ? window.location.origin : "";
-    await client.auth.signInWithOAuth({
-      provider,
-      options: {
-        redirectTo: `${currentOrigin}/auth/callback`,
-      },
-    });
+    console.log(provider)
   };
 
   return (

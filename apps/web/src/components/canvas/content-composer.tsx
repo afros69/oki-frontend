@@ -65,17 +65,10 @@ export function ContentComposerChatInterfaceComponent(
   const ffmpegRef = useRef(new FFmpeg());
 
   async function onNew(message: AppendMessage): Promise<void> {
+    console.log('NEW MESSAGE', message.content)
     // Explicitly check for false and not ! since this does not provide a default value
     // so we should assume undefined is true.
     if (message.startRun === false) return;
-    if (!userData.user) {
-      toast({
-        title: "User not found",
-        variant: "destructive",
-        duration: 5000,
-      });
-      return;
-    }
 
     if (message.content?.[0]?.type !== "text") {
       toast({
@@ -87,25 +80,9 @@ export function ContentComposerChatInterfaceComponent(
     }
     props.setChatStarted(true);
     setIsRunning(true);
-    setIsStreaming(true);
+    setIsStreaming(false);
 
     const contentDocuments: ContextDocument[] = [];
-    if (message.attachments) {
-      const files = message.attachments
-        .map((a) => a.file)
-        .filter((f): f is File => f != null);
-      const fileList = arrayToFileList(files);
-      if (fileList) {
-        const documentsResult = await convertDocuments({
-          ffmpeg: ffmpegRef.current,
-          messageRef,
-          documents: fileList,
-          userId: userData.user.id,
-          toast,
-        });
-        contentDocuments.push(...documentsResult);
-      }
-    }
 
     try {
       const humanMessage = new HumanMessage({

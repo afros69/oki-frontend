@@ -6,9 +6,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -H 0.0.0.0 -p 6969",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -H 0.0.0.0 -p 6969",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "format": "prettier --config .prettierrc --write \"src\"",

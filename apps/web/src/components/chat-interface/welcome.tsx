@@ -100,24 +100,24 @@ const QuickStartButtons = (props: QuickStartButtonsProps) => {
   return (
     <div className="flex flex-col gap-8 items-center justify-center w-full">
       <div className="flex flex-col gap-6">
-        <p className="text-gray-600 text-sm">Start with a blank canvas</p>
+        <p className="text-gray-600 text-sm">Начните с чистого листа</p>
         <div className="flex flex-row gap-1 items-center justify-center w-full">
           <Button
             variant="outline"
             className="text-gray-500 hover:text-gray-700 transition-colors ease-in rounded-2xl flex items-center justify-center gap-2 w-[250px] h-[64px]"
             onClick={() => props.handleQuickStart("text")}
           >
-            New Markdown
+            Новый документ
             <NotebookPen />
           </Button>
-          <ProgrammingLanguagesDropdown handleSubmit={handleLanguageSubmit} />
+          {/*<ProgrammingLanguagesDropdown handleSubmit={handleLanguageSubmit} />*/}
         </div>
       </div>
-      <div className="flex flex-col gap-6 mt-2 w-full">
-        <p className="text-gray-600 text-sm">or with a message</p>
-        {props.composer}
-        <QuickStartPrompts searchEnabled={props.searchEnabled} />
-      </div>
+      {/*<div className="flex flex-col gap-6 mt-2 w-full">*/}
+      {/*  <p className="text-gray-600 text-sm">or with a message</p>*/}
+      {/*  {props.composer}*/}
+      {/*  <QuickStartPrompts searchEnabled={props.searchEnabled} />*/}
+      {/*</div>*/}
     </div>
   );
 };
@@ -143,7 +143,7 @@ export const ThreadWelcome: FC<ThreadWelcomeProps> = (
             <AvatarFallback>LC</AvatarFallback>
           </Avatar>
           <TighterText className="mt-4 text-lg font-medium">
-            What would you like to write today?
+            Какой документ нужен вам сегодня?
           </TighterText>
           <div className="mt-8 w-full">
             <QuickStartButtons

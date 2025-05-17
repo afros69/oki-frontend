@@ -41,6 +41,27 @@ export function CanvasComponent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const chatCollapsedSearchParam = searchParams.get(CHAT_COLLAPSED_QUERY_PARAM);
+
+  // useEffect(() => {
+  //   setChatStarted(true);
+  //   const artifactContent: ArtifactCodeV3 | ArtifactMarkdownV3 = {
+  //     index: 1,
+  //     type: "text",
+  //     title: `Quick start text`,
+  //     fullMarkdown: "",
+  //   };
+  //
+  //   const newArtifact: ArtifactV3 = {
+  //     currentIndex: 1,
+  //     contents: [artifactContent],
+  //   };
+  //   // Do not worry about existing items in state. This should
+  //   // never occur since this action can only be invoked if
+  //   // there are no messages/artifacts in the thread.
+  //   setArtifact(newArtifact);
+  //   setIsEditing(true);
+  // }, []);
+
   useEffect(() => {
     try {
       if (chatCollapsedSearchParam) {
@@ -81,7 +102,7 @@ export function CanvasComponent() {
       artifactContent = {
         index: 1,
         type: "text",
-        title: `Quick start ${type}`,
+        title: `Новый документ`,
         fullMarkdown: "",
       };
     }

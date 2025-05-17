@@ -10,16 +10,16 @@ import { ComposerAttachments } from "../assistant-ui/attachment";
 import { ComposerActionsPopOut } from "./composer-actions-popout";
 
 const GENERIC_PLACEHOLDERS = [
-  "Share your big idea and let's write something amazing",
-  "Type your vision for the next great piece of content",
-  "Your masterpiece begins with this prompt",
-  "What would you like us to write about today?",
-  "Drop your content idea here and let's create",
-  "Your next great piece starts with this prompt",
-  "Share your story idea and watch it unfold",
-  "Let's write something incredible - start here",
-  "Your writing journey begins with this prompt",
-  "Turn your idea into content magic - start here",
+  "Опишите, какой документ вам нужен, и мы его подготовим",
+  "Какой договор или юридический документ вы хотите создать?",
+  "Начните вводить детали вашего контракта, и мы его оформим",
+  "Опишите условия договора, и OkiDoki сделает все остальное",
+  "Какой юридический документ вам нужен сегодня?",
+  "Введите параметры вашего соглашения, и мы его сгенерируем",
+  "Опишите ваши требования к документу, и он будет готов",
+  "Начните писать ваш запрос, и OkiDoki подготовит документ",
+  "Какой тип контракта или акта вам необходим?",
+  "Давайте создадим юридический документ – введите ваши условия",
 ];
 
 const SEARCH_PLACEHOLDERS = [
@@ -80,10 +80,10 @@ export const Composer: FC<ComposerProps> = (props: ComposerProps) => {
         </div>
 
         <div className="flex flex-row w-full items-center justify-start my-auto">
-          <ComposerActionsPopOut
-            userId={props.userId}
-            chatStarted={props.chatStarted}
-          />
+          {/*<ComposerActionsPopOut*/}
+          {/*  userId={props.userId}*/}
+          {/*  chatStarted={props.chatStarted}*/}
+          {/*/>*/}
           <ComposerPrimitive.Input
             autoFocus
             placeholder={placeholder}
@@ -93,6 +93,7 @@ export const Composer: FC<ComposerProps> = (props: ComposerProps) => {
           <ThreadPrimitive.If running={false}>
             <ComposerPrimitive.Send asChild>
               <TooltipIconButton
+                onClick={() => console.log('HERER')}
                 tooltip="Send"
                 variant="default"
                 className="my-2.5 size-8 p-2 transition-opacity ease-in"

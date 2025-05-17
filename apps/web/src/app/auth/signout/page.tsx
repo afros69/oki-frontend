@@ -1,22 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { createSupabaseClient } from "@/lib/supabase/client";
-import { useRouter } from "next/navigation";
 
 export default function Page() {
-  const router = useRouter();
-  const [errorOccurred, setErrorOccurred] = useState(false);
+  const [errorOccurred] = useState(false);
 
   useEffect(() => {
     async function signOut() {
-      const client = createSupabaseClient();
-      const { error } = await client.auth.signOut();
-      if (error) {
-        setErrorOccurred(true);
-      } else {
-        router.push("/auth/login");
-      }
+      console.log("Sign out")
     }
     signOut();
   }, []);

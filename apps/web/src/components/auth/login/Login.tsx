@@ -4,7 +4,6 @@ import Link from "next/link";
 import { buttonVariants } from "../../ui/button";
 import { UserAuthForm } from "./user-auth-form-login";
 import { login } from "./actions";
-import { createSupabaseClient } from "@/lib/supabase/client";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
@@ -42,16 +41,8 @@ export function Login() {
   const onLoginWithOauth = async (
     provider: "google" | "github"
   ): Promise<void> => {
+    console.log(provider)
     setIsError(false);
-    const client = createSupabaseClient();
-    const currentOrigin =
-      typeof window !== "undefined" ? window.location.origin : "";
-    await client.auth.signInWithOAuth({
-      provider,
-      options: {
-        redirectTo: `${currentOrigin}/auth/callback`,
-      },
-    });
   };
 
   return (

@@ -196,23 +196,24 @@ export function ThreadProvider({ children }: { children: ReactNode }) {
 
     setIsUserThreadsLoading(true);
     try {
-      const client = createClient();
-
-      const userThreads = await client.threads.search({
-        metadata: {
-          supabase_user_id: user.id,
-        },
-        limit: 100,
-      });
-
-      if (userThreads.length > 0) {
-        const lastInArray = userThreads[0];
-        const allButLast = userThreads.slice(1, userThreads.length);
-        const filteredThreads = allButLast.filter(
-          (thread) => thread.values && Object.keys(thread.values).length > 0
-        );
-        setUserThreads([...filteredThreads, lastInArray]);
-      }
+      console.log('Searching for threads')
+      // const client = createClient();
+      //
+      // const userThreads = await client.threads.search({
+      //   metadata: {
+      //     supabase_user_id: user.id,
+      //   },
+      //   limit: 100,
+      // });
+      //
+      // if (userThreads.length > 0) {
+      //   const lastInArray = userThreads[0];
+      //   const allButLast = userThreads.slice(1, userThreads.length);
+      //   const filteredThreads = allButLast.filter(
+      //     (thread) => thread.values && Object.keys(thread.values).length > 0
+      //   );
+      //   setUserThreads([...filteredThreads, lastInArray]);
+      // }
     } finally {
       setIsUserThreadsLoading(false);
     }

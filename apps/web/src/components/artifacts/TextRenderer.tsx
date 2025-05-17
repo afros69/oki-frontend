@@ -121,6 +121,7 @@ export function TextRendererComponent(props: TextRendererProps) {
   }, [props.isInputVisible]);
 
   useEffect(() => {
+    console.log("Artifact", artifact)
     if (!artifact) {
       return;
     }

@@ -11,12 +11,10 @@ import { TooltipIconButton } from "../ui/assistant-ui/tooltip-icon-button";
 import { TighterText } from "../ui/header";
 import { Composer } from "./composer";
 import { AssistantMessage, UserMessage } from "./messages";
-import ModelSelector from "./model-selector";
 import { ThreadHistory } from "./thread-history";
 import { ThreadWelcome } from "./welcome";
 import { useUserContext } from "@/contexts/UserContext";
 import { useThreadContext } from "@/contexts/ThreadProvider";
-import { useAssistantContext } from "@/contexts/AssistantContext";
 
 const ThreadScrollToBottom: FC = () => {
   return (
@@ -56,7 +54,6 @@ export const Thread: FC<ThreadProps> = (props: ThreadProps) => {
   const {
     graphData: { clearState, runId, feedbackSubmitted, setFeedbackSubmitted },
   } = useGraphContext();
-  const { selectedAssistant } = useAssistantContext();
   const {
     modelName,
     setModelName,
@@ -97,16 +94,16 @@ export const Thread: FC<ThreadProps> = (props: ThreadProps) => {
           <ThreadHistory
             switchSelectedThreadCallback={switchSelectedThreadCallback}
           />
-          <TighterText className="text-xl">Open Canvas</TighterText>
-          {!hasChatStarted && (
-            <ModelSelector
-              modelName={modelName}
-              setModelName={setModelName}
-              modelConfig={modelConfig}
-              setModelConfig={setModelConfig}
-              modelConfigs={modelConfigs}
-            />
-          )}
+          <TighterText className="text-xl">OkiDoki</TighterText>
+          {/*{!hasChatStarted && (*/}
+          {/*  <ModelSelector*/}
+          {/*    modelName={modelName}*/}
+          {/*    setModelName={setModelName}*/}
+          {/*    modelConfig={modelConfig}*/}
+          {/*    setModelConfig={setModelConfig}*/}
+          {/*    modelConfigs={modelConfigs}*/}
+          {/*  />*/}
+          {/*)}*/}
         </div>
         {hasChatStarted ? (
           <div className="flex flex-row flex-1 gap-2 items-center justify-end">
@@ -131,7 +128,7 @@ export const Thread: FC<ThreadProps> = (props: ThreadProps) => {
           </div>
         ) : (
           <div className="flex flex-row gap-2 items-center">
-            <ReflectionsDialog selectedAssistant={selectedAssistant} />
+
           </div>
         )}
       </div>
@@ -168,13 +165,13 @@ export const Thread: FC<ThreadProps> = (props: ThreadProps) => {
         <div className="w-full max-w-2xl">
           {hasChatStarted && (
             <div className="flex flex-col space-y-2">
-              <ModelSelector
-                modelName={modelName}
-                setModelName={setModelName}
-                modelConfig={modelConfig}
-                setModelConfig={setModelConfig}
-                modelConfigs={modelConfigs}
-              />
+              {/*<ModelSelector*/}
+              {/*  modelName={modelName}*/}
+              {/*  setModelName={setModelName}*/}
+              {/*  modelConfig={modelConfig}*/}
+              {/*  setModelConfig={setModelConfig}*/}
+              {/*  modelConfigs={modelConfigs}*/}
+              {/*/>*/}
               <Composer
                 chatStarted={true}
                 userId={props.userId}

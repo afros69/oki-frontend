@@ -16,7 +16,7 @@ import {
 import React, { Dispatch, SetStateAction, type FC } from "react";
 
 import { MarkdownText } from "@/components/ui/assistant-ui/markdown-text";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import { FeedbackButton } from "./feedback";
 import { TighterText } from "../ui/header";
 import { useFeedback } from "@/hooks/useFeedback";
@@ -121,20 +121,19 @@ export const AssistantMessage: FC<AssistantMessageProps> = ({
   return (
     <MessagePrimitive.Root className="relative grid w-full max-w-2xl grid-cols-[auto_auto_1fr] grid-rows-[auto_1fr] py-4">
       <Avatar className="col-start-1 row-span-full row-start-1 mr-4">
-        <AvatarFallback>A</AvatarFallback>
+        <AvatarImage src="/lc_logo.jpg" alt="LangChain Logo" />
+        <AvatarFallback>OD</AvatarFallback>
       </Avatar>
 
       <div className="text-foreground col-span-2 col-start-2 row-start-1 my-1.5 max-w-xl break-words leading-7">
         <MessagePrimitive.Content components={{ Text: MarkdownText }} />
-        {isLast && runId && (
-          <MessagePrimitive.If lastOrHover assistant>
-            <AssistantMessageBar
-              feedbackSubmitted={feedbackSubmitted}
-              setFeedbackSubmitted={setFeedbackSubmitted}
-              runId={runId}
-            />
-          </MessagePrimitive.If>
-        )}
+        <MessagePrimitive.If lastOrHover assistant>
+          <AssistantMessageBar
+              feedbackSubmitted={false}
+              setFeedbackSubmitted={() => {}}
+              runId={"dfjdhf"}
+          />
+        </MessagePrimitive.If>
       </div>
     </MessagePrimitive.Root>
   );
@@ -170,7 +169,6 @@ const AssistantMessageBarComponent = ({
   feedbackSubmitted,
   setFeedbackSubmitted,
 }: AssistantMessageBarProps) => {
-  const { isLoading, sendFeedback } = useFeedback();
   return (
     <ActionBarPrimitive.Root
       hideWhenRunning
@@ -185,8 +183,8 @@ const AssistantMessageBarComponent = ({
         <>
           <ActionBarPrimitive.FeedbackPositive asChild>
             <FeedbackButton
-              isLoading={isLoading}
-              sendFeedback={sendFeedback}
+              isLoading={false}
+              sendFeedback={() => {}}
               setFeedbackSubmitted={setFeedbackSubmitted}
               runId={runId}
               feedbackValue={1.0}
@@ -195,8 +193,8 @@ const AssistantMessageBarComponent = ({
           </ActionBarPrimitive.FeedbackPositive>
           <ActionBarPrimitive.FeedbackNegative asChild>
             <FeedbackButton
-              isLoading={isLoading}
-              sendFeedback={sendFeedback}
+              isLoading={false}
+              sendFeedback={() => {}}
               setFeedbackSubmitted={setFeedbackSubmitted}
               runId={runId}
               feedbackValue={0.0}

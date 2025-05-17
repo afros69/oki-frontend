@@ -30,24 +30,24 @@ export const FeedbackButton: FC<FeedbackButtonProps> = ({
   const { toast } = useToast();
 
   const handleClick = async () => {
-    try {
-      const res = await sendFeedback(runId, "feedback", feedbackValue);
-      if (res?.success) {
-        setFeedbackSubmitted(true);
-      } else {
-        toast({
-          title: "Failed to submit feedback",
-          description: "Please try again later.",
-          variant: "destructive",
-        });
-      }
-    } catch (_) {
-      toast({
-        title: "Failed to submit feedback",
-        description: "Please try again later.",
-        variant: "destructive",
-      });
-    }
+    // try {
+    //   const res = await sendFeedback(runId, "feedback", feedbackValue);
+    //   if (res?.success) {
+    //     setFeedbackSubmitted(true);
+    //   } else {
+    //     toast({
+    //       title: "Failed to submit feedback",
+    //       description: "Please try again later.",
+    //       variant: "destructive",
+    //     });
+    //   }
+    // } catch (_) {
+    //   toast({
+    //     title: "Failed to submit feedback",
+    //     description: "Please try again later.",
+    //     variant: "destructive",
+    //   });
+    // }
   };
 
   const tooltip = `Give ${icon === "thumbs-up" ? "positive" : "negative"} feedback on this run`;

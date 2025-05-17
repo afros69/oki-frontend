@@ -97,6 +97,11 @@ type GraphContentType = {
   graphData: GraphData;
 };
 
+type ChatApiResponse = {
+  message: string
+  markdown_str: string | null
+};
+
 const GraphContext = createContext<GraphContentType | undefined>(undefined);
 
 // Shim for recent LangGraph bugfix
@@ -280,41 +285,77 @@ export function GraphProvider({ children }: { children: ReactNode }) {
     setFirstTokenReceived(true);
   };
 
+  async function sendChatRequest(message): Promise<ChatApiResponse> {
+    const url = 'http://localhost:5050/api/chat';
+    const requestData = {
+      message: message
+    };
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData)
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const responseData = await response.json();
+      console.log('Response:', responseData);
+      return responseData;
+    } catch (error) {
+      console.error('Error sending chat request:', error);
+      throw error;
+    }
+  }
+
   const streamMessageV2 = async (params: GraphInput) => {
     const newMessageText = params.messages[0]!.content
     console.log(`Current thread: ${threadData.threadId}`)
     setFirstTokenReceived(false);
     setError(false);
 
-    // TODO: send new message text to backend
-    // TODO: add ai response new message list
-    // TODO: if there is markdown - set new artifact and update the ui
+    setIsStreaming(true);
+    try {
+      setIsStreaming(true);
+      sendChatRequest(
+          newMessageText
+      ).then((chatResponse) => {
+        setMessages((prev) => {
+          return [
+            ...prev,
+            new AIMessage({
+              id: `fhfhfhf-${uuidv4()}`,
+              content: chatResponse.message || '...',
+            }),
+          ];
+        });
 
-    console.log(artifact)
+        if(chatResponse.markdown_str !== null) {
+          const artifactContent: ArtifactCodeV3 | ArtifactMarkdownV3 = {
+            index: 1,
+            type: "text",
+            title: artifact!.contents[0]!.title,
+            fullMarkdown: chatResponse.markdown_str
+          };
 
-    setMessages((prev) => {
-      return [
-        ...prev,
-        new AIMessage({
-          id: `fhfhfhf-${uuidv4()}`,
-          content: "Ответ справа",
-        }),
-      ];
-    });
+          const newArtifact: ArtifactV3 = {
+            currentIndex: 1,
+            contents: [artifactContent],
+          };
+          setArtifact(newArtifact);
+          setUpdateRenderedArtifactRequired(true)
+        }
 
-    const artifactContent: ArtifactCodeV3 | ArtifactMarkdownV3 = {
-      index: 1,
-      type: "text",
-      title: artifact!.contents[0]!.title,
-      fullMarkdown: "Ответ"
-    };
-
-    const newArtifact: ArtifactV3 = {
-      currentIndex: 1,
-      contents: [artifactContent],
-    };
-    setArtifact(newArtifact);
-    setUpdateRenderedArtifactRequired(true)
+        setIsStreaming(false);
+      })
+    } catch (e){
+      console.log(`Error: ${e}`)
+    }
 
     let currentThreadId = threadData.threadId;
     console.log(`Current thread: ${currentThreadId}`)

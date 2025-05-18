@@ -21,6 +21,7 @@ import { AIMessage, BaseMessage } from "@langchain/core/messages";
 import { useRuns } from "@/hooks/useRuns";
 import { createClient } from "@/hooks/utils";
 import { WEB_SEARCH_RESULTS_QUERY_PARAM } from "@/constants";
+import { backend_url } from "@/lib/consts"
 import {
   DEFAULT_INPUTS,
   OC_WEB_SEARCH_RESULTS_MESSAGE_KEY,
@@ -286,7 +287,7 @@ export function GraphProvider({ children }: { children: ReactNode }) {
   };
 
   async function sendChatRequest(message): Promise<ChatApiResponse> {
-    const url = 'http://localhost:5050/api/chat';
+    const url = `${backend_url}/chat_v2`;
     const requestData = {
       message: message
     };

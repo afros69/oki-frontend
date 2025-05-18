@@ -10,6 +10,7 @@ import {
 import { useGraphContext } from "@/contexts/GraphContext";
 import { useToast } from "@/hooks/use-toast";
 import { getLanguageTemplate } from "@/lib/get_language_template";
+import { backend_url } from "@/lib/consts"
 import {
   ArtifactCodeV3,
   ArtifactMarkdownV3,
@@ -75,6 +76,28 @@ export function CanvasComponent() {
     }
   }, [chatCollapsedSearchParam]);
 
+
+  const clearPrevChat = async () => {
+    const url = `${backend_url}/chat_v2/clear`;
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+    } catch (error) {
+      console.error('Error sending chat request:', error);
+      throw error;
+    }
+  }
+
   const handleQuickStart = (
     type: "text" | "code",
     language?: ProgrammingLanguageOptions
@@ -87,6 +110,10 @@ export function CanvasComponent() {
       });
       return;
     }
+
+    clearPrevChat().then(() => {
+      console.log('Cleared prev chat')
+    })
     setChatStarted(true);
 
     let artifactContent: ArtifactCodeV3 | ArtifactMarkdownV3;
